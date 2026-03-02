@@ -16,7 +16,7 @@ const Inicio = () => {
       <main className={`hero ${isVisible ? 'fade-in' : ''}`}>
         <div className="hero-content">
           <span className="badge">MAUDLEX Estudio Jurídico</span>
-          <h1>Impulsando el <span className="text-gradient"></span>La confianza es la base de la justicia</h1>
+          <h1>Impulsando el <span className="text-gradient">Futuro.</span> La confianza es la base de la justicia</h1>
           <p>
             Somos un estudio jurídico comprometido con la excelencia en la prestación de servicios legales.
             Ofrecemos asesoría integral y personalizada a nuestros clientes, garantizando resultados óptimos y satisfactorios.
