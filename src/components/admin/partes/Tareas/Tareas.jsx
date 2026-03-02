@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
+import AsignarTarea, { eliminarTarea } from './funasigtar';
 
 const Tareas = () => {
-    const [view, setView] = useState('list'); // 'list' or 'calendar'
+    const [view, setView] = useState('list'); // 'list' or 'asignar'
+    const [tareaEditando, setTareaEditando] = useState(null);
+    const [isDeleting, setIsDeleting] = useState(false);
     const [tareas, setTareas] = useState([
         { id: 1, titulo: 'Revision de Contrato', abogado: 'Dra. Elena Rivas', cliente: 'TechCorp', estado: 'Pendiente', limite: '2024-03-01', prioridad: 'Alta', importante: true },
         { id: 2, titulo: 'Cita: Firma de Escritura', abogado: 'Juan Carlos Mendoza', cliente: 'Familia Pérez', estado: 'Agendada', limite: '2024-02-28', prioridad: 'Media', importante: false }
     ]);
+
+    const handleEliminar = (id) => {
+        setTareas(eliminarTarea(id, tareas));
+    };
 
     return (
         <div className="tareas-container">
@@ -16,8 +23,15 @@ const Tareas = () => {
                 </div>
                 <div className="header-actions">
                     <button className={`btn-tab ${view === 'list' ? 'active' : ''}`} onClick={() => setView('list')}>Lista</button>
-                    <button className={`btn-tab ${view === 'calendar' ? 'active' : ''}`} onClick={() => setView('calendar')}>Calendario</button>
-                    <button className="btn-primary" style={{ marginLeft: '1rem' }}>+ Nueva Tarea/Cita</button>
+                    <button className={`btn-tab ${view === 'asignar' ? 'active' : ''}`} onClick={() => { setView('asignar'); setTareaEditando(null); }}>Asignación</button>
+                    <button className="btn-primary" style={{ marginLeft: '1rem' }} onClick={() => { setView('asignar'); setTareaEditando(null); }}>+ Nueva Tarea/Cita</button>
+                    <button
+                        className={`btn-primary ${isDeleting ? 'btn-danger' : ''}`}
+                        style={{ marginLeft: '1rem' }}
+                        onClick={() => setIsDeleting(!isDeleting)}
+                    >
+                        {isDeleting ? '✓ Finalizar' : '- Eliminar'}
+                    </button>
                 </div>
             </header>
 
@@ -52,8 +66,22 @@ const Tareas = () => {
                                     </td>
                                     <td style={{ padding: '1rem' }}>{tarea.prioridad}</td>
                                     <td style={{ padding: '1rem' }}>
-                                        <button className="icon-btn-small" title="Subir documento">📤</button>
-                                        <button className="icon-btn-small" title="Comentario">💬</button>
+                                        {!isDeleting ? (
+                                            <>
+                                                <button className="icon-btn-small" title="Editar" onClick={() => { setTareaEditando(tarea); setView('asignar'); }}>✏️</button>
+                                                <button className="icon-btn-small" title="Subir documento">📤</button>
+                                                <button className="icon-btn-small" title="Comentario">💬</button>
+                                            </>
+                                        ) : (
+                                            <button
+                                                className="icon-btn-small btn-danger-icon"
+                                                title="Eliminar"
+                                                onClick={() => handleEliminar(tarea.id)}
+                                                style={{ background: '#ef4444', borderRadius: '4px', padding: '2px 5px' }}
+                                            >
+                                                🗑️ Eliminar
+                                            </button>
+                                        )}
                                     </td>
                                 </tr>
                             ))}
@@ -61,19 +89,28 @@ const Tareas = () => {
                     </table>
                 </div>
             ) : (
-                <div className="calendar-placeholder glass" style={{ marginTop: '2rem', padding: '4rem', textAlign: 'center' }}>
-                    <h3>Calendario de Actividades</h3>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '10px', marginTop: '2rem' }}>
-                        {Array.from({ length: 31 }).map((_, i) => (
-                            <div key={i} style={{ height: '80px', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', padding: '5px', textAlign: 'left' }}>
-                                <span style={{ fontSize: '0.8rem', opacity: 0.5 }}>{i + 1}</span>
-                                {i === 24 && <div style={{ fontSize: '0.6rem', background: 'rgba(99, 102, 241, 0.2)', padding: '2px', borderRadius: '4px', marginTop: '5px' }}>Cita: TechCorp</div>}
-                                {i === 27 && <div style={{ fontSize: '0.6rem', background: 'rgba(239, 68, 68, 0.2)', padding: '2px', borderRadius: '4px', marginTop: '5px' }}>Tarea: Contrato</div>}
-                            </div>
-                        ))}
-                    </div>
-                </div>
+                <AsignarTarea
+                    tareas={tareas}
+                    setTareas={setTareas}
+                    setView={setView}
+                    tareaEditando={tareaEditando}
+                    setTareaEditando={setTareaEditando}
+                />
             )}
+
+            <style>{`
+                .btn-danger {
+                    background: #ef4444 !important;
+                    border-color: #ef4444 !important;
+                }
+                .btn-danger-icon:hover {
+                    transform: scale(1.1);
+                    filter: brightness(1.2);
+                }
+                .is-deleting-row {
+                    background: rgba(239, 68, 68, 0.05);
+                }
+            `}</style>
         </div>
     );
 };
