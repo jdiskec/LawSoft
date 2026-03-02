@@ -15,11 +15,11 @@ const Inicio = () => {
     <>
       <main className={`hero ${isVisible ? 'fade-in' : ''}`}>
         <div className="hero-content">
-          <span className="badge">Nueva era del Software Jurídico</span>
-          <h1>Impulsando el <span className="text-gradient">Futuro</span> de tu Estudio</h1>
+          <span className="badge">MAUDLEX Estudio Jurídico</span>
+          <h1>Impulsando el <span className="text-gradient"></span>La confianza es la base de la justicia</h1>
           <p>
-            Creamos experiencias digitales excepcionales para la gestión legal.
-            Transformamos tu práctica jurídica en una realidad digital escalable, potente y elegante.
+            Somos un estudio jurídico comprometido con la excelencia en la prestación de servicios legales.
+            Ofrecemos asesoría integral y personalizada a nuestros clientes, garantizando resultados óptimos y satisfactorios.
           </p>
           <div className="hero-actions">
             <Link to="/register" className="btn-primary">Empezar Ahora</Link>
@@ -36,7 +36,7 @@ const Inicio = () => {
       </main>
 
       <footer className="footer">
-        <p>&copy; 2024 MedusaWare - Soluciones Jurídicas. Todos los derechos reservados.</p>
+        <p>&copy; 2024 - 2026 MedusaWare - Soluciones Jurídicas. Todos los derechos reservados.</p>
       </footer>
     </>
   );

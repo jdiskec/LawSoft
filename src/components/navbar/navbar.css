@@ -5,11 +5,21 @@
     padding: 2rem 0;
 }
 
-.logo-text {
-    font-size: 1.5rem;
-    /* Adjusted from 6.5rem which seemed way too large for a navbar logo */
-    font-weight: 800;
-    letter-spacing: -0.05em;
+.logo-container {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.navbar-logo {
+    height: 200px;
+    width: 200px;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.navbar-logo:hover {
+    transform: scale(1.05);
 }
 
 .nav-links {

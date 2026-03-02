@@ -1,10 +1,13 @@
 import { Link } from 'react-router-dom';
 import './navbar.css';
+import logo from '../../assets/maudlex.png';
 
 const Navbar = ({ isDarkMode, toggleTheme }) => {
     return (
         <nav className="navbar">
-            <div className="logo-text">MedusaWare<span className="text-gradient">-Layer</span></div>
+            <Link to="/" className="logo-container">
+                <img src={logo} alt="MAUDLEX Logo" className="navbar-logo" />
+            </Link>
             <div className="nav-links">
                 <a href="#">Soluciones</a>
                 <a href="#">Servicios</a>
